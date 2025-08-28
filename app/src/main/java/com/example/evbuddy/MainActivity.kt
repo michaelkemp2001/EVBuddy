@@ -128,7 +128,7 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(12.dp))
 
         Button(
-            onClick = { /* TODO: Navigate to charger */ },
+            onClick = { /*Find Charger */ },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondary
@@ -139,11 +139,11 @@ fun HomeScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // 📌 Use Box to stack map + drivers card
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f) // take remaining space
+                .weight(1f)
                 .padding(top = 8.dp)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
@@ -158,7 +158,7 @@ fun HomeScreen() {
             if (showDrivers) {
                 Card(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter) // ✅ now works
+                        .align(Alignment.BottomCenter)
                         .fillMaxWidth()
                         .padding(8.dp),
                     colors = CardDefaults.cardColors(
