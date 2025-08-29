@@ -1,9 +1,6 @@
 package com.example.evbuddy
-
 import androidx.compose.foundation.background
-
 import androidx.compose.foundation.layout.*
-
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,13 +11,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 
+
+//Class for bottomNavItem
 sealed class BottomNavItem(val route: String, val label: String, val icon: Int) {
     object Home : BottomNavItem("home", "Home", android.R.drawable.ic_menu_view)
     object Requests : BottomNavItem("requests", "My Requests", android.R.drawable.ic_menu_agenda)
     object Profile : BottomNavItem("profile", "Profile", android.R.drawable.ic_menu_myplaces)
 }
 
-
+//Class for drivers
 data class Driver(
     val name: String,
     val distanceKm: Double,
@@ -29,7 +28,7 @@ data class Driver(
 )
 
 
-
+// Creates header and connects bottom nav bar. Loads home screen first
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
@@ -53,6 +52,8 @@ fun MainScreen() {
     }
 }
 
+
+//Renders bottom bar UI
 @Composable
 fun BottomBar(navController: NavHostController) {
     val items = listOf(
@@ -70,8 +71,12 @@ fun BottomBar(navController: NavHostController) {
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
+
+                        //Avoids building a stack of tabs
                         popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        //Dont relaunch a screen if your already on it
                         launchSingleTop = true
+                        //Switching back to a tab restores it
                         restoreState = true
                     }
                 }
@@ -80,6 +85,7 @@ fun BottomBar(navController: NavHostController) {
     }
 }
 
+//Renders the drivers list
 @Composable
 fun DriverRow(driver: Driver) {
     Row(
@@ -110,7 +116,7 @@ fun HomeScreen() {
         Driver("Carlos Lopez", 1.2, 3, 4.9),
         Driver("Diana Lee", 3.7, 7, 4.7)
     )
-
+    //Column containing both buttons, map placeholder and show drivers list
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -118,6 +124,7 @@ fun HomeScreen() {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Button for finding show drivers
         Button(
             onClick = { showDrivers = !showDrivers },
             modifier = Modifier.fillMaxWidth()
@@ -127,6 +134,7 @@ fun HomeScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        //Button for finding charger
         Button(
             onClick = { /*Find Charger */ },
             modifier = Modifier.fillMaxWidth(),
@@ -139,7 +147,7 @@ fun HomeScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-
+        //Box to stack map + Drivers
         Box(
             modifier = Modifier
                 .fillMaxWidth()
